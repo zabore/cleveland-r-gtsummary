@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Cleveland-R-gtsummary</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Emily C. Zabor" />
+    <meta name="date" content="2020-09-30" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+
+
+
+class: inverse, center, title-slide, middle
+
+# Creating presentation-ready summary tables with {gtsummary}
+
+### Emily C. Zabor
+
+#### Greater Cleveland R Group
+
+#### September 30, 2020
+
+
+&lt;p align="center"&gt;&lt;img src="Images/CC_hires_r.png" width=30%&gt;&lt;/p&gt;
+
+
+---
+
+# Motivation: the reproducibility crisis
+
+.pull-left[.large[
+- Quality of medical research is often low
+
+- **Low quality code** in medical research part of the problem
+
+- Low quality code is more likely to **contain errors**
+
+- Reproducibility is often **cumbersome** and **time-consuming**
+]]
+
+.pull-right[
+&lt;p align="center"&gt;&lt;img src="Images/reproducibility-graphic-online1.jpeg" width=90%&gt;&lt;/p&gt;
+]
+
+.footnote[Image source: https://www.nature.com/news/1-500-scientists-lift-the-lid-on-reproducibility-1.19970; Slide source: http://www.danieldsjoberg.com/rmedicine-gtsummary]
+
+
+---
+# Motivation: reproducible, presentation-ready tables
+
+&lt;p align="center"&gt;&lt;img src="Images/table1_example.png" width=70%&gt;
+  
+.footnote[Minami CA, Zabor EC, Gilbert E, et al. Do Body Mass Index and Breast Density Impact Cancer Risk Among Women with Lobular Carcinoma In Situ?. *Ann Surg Oncol.* 2020;27(6):1844-1851. doi:10.1245/s10434-019-08126-9]
+
+
+---
+# {gtsummary} overview
+
+.pull-left[
+* Create tabular summaries with sensible defaults but highly customizable
+* Types of summaries:
+  - "Table 1"-types
+  - Cross-tabulation
+  - Regression models
+  - Survival data
+  - Custom tables
+
+* Report statistics from {gtsummary} tables inline in R Markdown
+
+* Stack and/or merge any table type
+
+* Use themes to standardize across tables
+
+* Choose from different print engines
+
+]
+
+.pull-right[
+&lt;img src="Images/gtsummary_logo.png" width=80%&gt;
+]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---
+
+# {gtsummary} example dataset
+
+* The `trial` dataset is included with {gtsummary}
+
+* Simulated dataset of baseline characteristics for 200 patients who receive Drug A or Drug B
+
+* Variables were assigned labels using the `labelled` package
+
+
+```r
+library(gtsummary)
+library(tidyverse)
+
+head(trial)
+```
+
+```
+## # A tibble: 6 x 8
+##   trt      age marker stage grade response death ttdeath
+##   &lt;chr&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;fct&gt; &lt;fct&gt;    &lt;int&gt; &lt;int&gt;   &lt;dbl&gt;
+## 1 Drug A    23  0.16  T1    II           0     0    24  
+## 2 Drug B     9  1.11  T2    I            1     0    24  
+## 3 Drug A    31  0.277 T1    II           0     0    24  
+## 4 Drug A    NA  2.07  T3    III          1     1    17.6
+## 5 Drug A    51  2.77  T4    III          1     1    16.4
+## 6 Drug B    39  0.613 T4    I            0     1    15.6
+```
+
+
+---
+# {gtsummary} example dataset
+
+.pull-left[
+
+This presentation will use a subset of the variables
+
+
+```r
+sm_trial &lt;-
+  trial %&gt;% 
+  select(trt, age, grade, response)
+```
+
+
+
+]
+
+.pull-right[
+&lt;p align="center"&gt;&lt;img src="Images/sm_trial_info.png" width=90%&gt;&lt;/p&gt;
+]
+
+
+---
+
+class: inverse, center, middle
+# tbl_summary()
+
+
+---
+# Basic tbl_summary()
+
+.pull-left[
+
+
+```r
+tbl_summary_1 &lt;- 
+  sm_trial %&gt;%
+  select(age, grade, response) %&gt;% 
+  tbl_summary()
+```
+
+
+
+.medium[
+- Three types of summaries: `continuous`, `categorical`, and `dichotomous`
+
+- Statistics are `median (IQR)` for continuous, `n (%)` for categorical/dichotomous
+
+- Variables coded `0/1`, `TRUE/FALSE`, `Yes/No` treated as dichotomous
+
+- Lists `NA` values under "Unknown"
+
+- Label attributes are printed automatically
+]
+
+]
+
+.pull-right[
+&lt;p align="center"&gt;&lt;img src="Images/tbl_summary_1.png" width=85%&gt;&lt;/p&gt;
+]
+
+
+---
+# Customize tbl_summary() output
+
+.pull-left[
+
+
+```r
+tbl_summary_2 &lt;- 
+  sm_trial %&gt;%
+  tbl_summary(
+    by = trt,
+    statistic = response ~ "{n} / {N} ({p}%)",
+    label = grade ~ "Pathologic tumor grade",
+    digits = age ~ 2
+    )
+```
+
+
+
+.medium[
+- `by`: specifies a column variable for cross-tabulation
+- `statistic`: customize the reported statistics
+- `label`: change or customize variable labels
+- `digits`: specify the number of decimal places for rounding
+
+]
+]
+
+.pull-right[
+&lt;p align="center"&gt;&lt;img src="Images/tbl_summary_2.png" width=90%&gt;&lt;/p&gt;
+]
+
+
+---
+# Customize tbl_summary() output
+
+**provide argument**       =    **select variables**      ~   **give instructions**
+
+
+```r
+sm_trial %&gt;%
+  tbl_summary(
+    statistic    =    all_continuous()        ~    "{mean} ({sd})",
+    label        =    starts_with("grade")    ~    "Pathologic grade",
+    digits       =    age                     ~    2
+    )
+```
+
+&lt;br&gt;
+
+Use **lists** to specify more than two choices:
+
+
+```r
+label = list(age ~ "Patient age (years)", grade = "Pathologic tumor grade")
+```
+
+
+---
+# Add-on functions in {gtsummary}
+
+.xxlarge[
+`tbl_summary()` objects can also be updated using related functions.
+
+- `add_*()` add additional column of statistics or information, e.g. p-values, q-values, overall statistics, N obs., and more
+
+- `modify_*()` modify table headers, spanning headers, and footnotes
+
+- `bold_*()/italicize_*()` style labels, variable levels, significant p-values
+
+]
+
+
+---
+# Update `tbl_summary()` with `add_*()`
+
+.pull-left[
+
+```r
+tbl_summary_3a &lt;- 
+  sm_trial %&gt;%
+  tbl_summary(
+    by = trt
+    ) %&gt;% 
+  add_p() %&gt;% 
+  add_q()  
+```
+
+```
+## Adjusting p-values with
+## `stats::p.adjust(x$table_body$p.value, method = "fdr")`
+```
+
+
+]
+
+.pull-right[
+&lt;p align="center"&gt;&lt;img src="Images/tbl_summary_3a.png" width=100%&gt;&lt;/p&gt;
+]
+
+
+---
+# Update `tbl_summary()` with `add_*()`
+
+.pull-left[
+
+```r
+tbl_summary_3b &lt;- 
+  sm_trial %&gt;%
+  tbl_summary(
+    by = trt
+    ) %&gt;% 
+  add_overall() %&gt;% 
+  add_n() %&gt;% 
+  add_stat_label(
+    label = all_categorical() ~ "No. (%)"
+  ) 
+```
+
+
+]
+
+.pull-right[
+&lt;p align="center"&gt;&lt;img src="Images/tbl_summary_3b.png" width=100%&gt;&lt;/p&gt;
+]
+
+
+---
+# Update `tbl_summary()` with `bold_*()/italicize_*()`
+
+.pull-left[
+
+```r
+tbl_summary_4 &lt;- 
+  sm_trial %&gt;%
+  tbl_summary(
+    by = trt
+    ) %&gt;%
+  add_p() %&gt;% 
+  bold_labels() %&gt;% 
+  italicize_levels() %&gt;% 
+  bold_p()
+```
+
+
+]
+
+.pull-right[
+&lt;p align="center"&gt;&lt;img src="Images/tbl_summary_4.png" width=100%&gt;&lt;/p&gt;
+]
+
+
+---
+# Update `tbl_summary()` with `modify_*()`
+
+.pull-left[
+
+```r
+tbl_summary_5 &lt;- 
+  sm_trial %&gt;% select(age, response, trt) %&gt;% 
+  tbl_summary(
+    by = trt
+    ) %&gt;%
+  modify_header(
+    update = list(
+      stat_1 ~ "**A**",
+      stat_2 ~ "**B**"
+    )) %&gt;% 
+  modify_spanning_header(
+    update = starts_with("stat_") ~ "Drug") %&gt;% 
+  modify_footnote(
+    update = starts_with("stat_") ~ 
+      "median (IQR) for continuous; n (%) for categorical"
+  )
+```
+
+
+]
+
+.pull-right[
+&lt;p align="center"&gt;&lt;img src="Images/tbl_summary_5.png" width=90%&gt;&lt;/p&gt;
+]
+
+* Use `show_header_names()` to see the internal header names available for use in `modify_header()`
+
+
+---
+# Add-on functions in {gtsummary}
+
+And many more! 
+
+See the documentation at http://www.danieldsjoberg.com/gtsummary/reference/index.html
+
+And a detailed `tbl_summary()` vignette at http://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
