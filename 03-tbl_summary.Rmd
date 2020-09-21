@@ -231,6 +231,35 @@ See the documentation at http://www.danieldsjoberg.com/gtsummary/reference/index
 And a detailed `tbl_summary()` vignette at http://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html
 
 
+---
+# Cross-tabulation with `tbl_cross()`
+
+`tbl_cross()` is a wrapper for `tbl_summary()` for **n x m** tables
+
+.pull-left[
+<br>
+```{r}
+tbl_cross_1 <-
+  sm_trial %>%
+  tbl_cross(
+    row = trt, 
+    col = grade,
+    percent = "row",
+    margin = "row"
+  ) %>%
+  add_p(source_note = TRUE)
+```
+
+```{r, include=FALSE}
+my_gtsave("tbl_cross_1")
+```
+]
+
+.pull-right[
+<p align="center"><img src="Images/tbl_cross_1.png" width=90%></p>
+]
+
+
 
 
 

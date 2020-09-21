@@ -384,6 +384,34 @@ And many more!
 See the documentation at http://www.danieldsjoberg.com/gtsummary/reference/index.html
 
 And a detailed `tbl_summary()` vignette at http://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html
+
+
+---
+# Cross-tabulation with `tbl_cross()`
+
+`tbl_cross()` is a wrapper for `tbl_summary()` for **n x m** tables
+
+.pull-left[
+&lt;br&gt;
+
+```r
+tbl_cross_1 &lt;-
+  sm_trial %&gt;%
+  tbl_cross(
+    row = trt, 
+    col = grade,
+    percent = "row",
+    margin = "row"
+  ) %&gt;%
+  add_p(source_note = TRUE)
+```
+
+
+]
+
+.pull-right[
+&lt;p align="center"&gt;&lt;img src="Images/tbl_cross_1.png" width=90%&gt;&lt;/p&gt;
+]
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
