@@ -4,7 +4,7 @@ author: "Emily C. Zabor"
 date: "September 30, 2020"
 output:
   xaringan::moon_reader:
-    css: xaringan-themer.css
+    css: [xaringan-themer.css, custom.css]
     lib_dir: libs
     seal: false
     nature:
@@ -64,5 +64,10 @@ class: inverse, center, title-slide, middle
 
 ---
 ```{r child='03-tbl_summary.Rmd'}
+```
+
+
+---
+```{r child='04-tbl_regression.Rmd'}
 ```
 

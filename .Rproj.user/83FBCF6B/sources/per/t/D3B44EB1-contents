@@ -24,6 +24,22 @@
   
 .footnote[Minami CA, Zabor EC, Gilbert E, et al. Do Body Mass Index and Breast Density Impact Cancer Risk Among Women with Lobular Carcinoma In Situ?. *Ann Surg Oncol.* 2020;27(6):1844-1851. doi:10.1245/s10434-019-08126-9]
 
+---
+# Our solution: internal package {biostatR}
+
+## Later converted to public package {gtsummary}
+
+Authors: Daniel Sjoberg (Maintainer), Emily Zabor, Karissa Whiting, Margaret Hannum
+
+<img src="Images/sjoberg.jpg" width=20%>
+<img src="Images/zabor3.jpg" width=20%>
+<img src="Images/whiting.jpg" width=20%>
+<img src="Images/hannum.jpg" width=20%>
+
+Contributors: Michael Curry, Esther Drill, Jessica Flynn, Joseph Larmarange, Stephanie Lobaugh, Gustavo Zapata Wainberg
+
+<p align="center"><img src="Images/msk-black-logo.png" width=30%>
+
 
 ---
 # {gtsummary} overview

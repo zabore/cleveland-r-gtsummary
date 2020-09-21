@@ -3,23 +3,23 @@
     "path": "H:/cleveland-r-gtsummary/04-tbl_regression.Rmd",
     "project_path": "04-tbl_regression.Rmd",
     "type": "r_markdown",
-    "hash": "0",
+    "hash": "3037335092",
     "contents": "",
-    "dirty": true,
+    "dirty": false,
     "created": 1600692080631.0,
     "source_on_save": false,
     "relative_order": 6,
     "properties": {
         "tempName": "Untitled1",
-        "cursorPosition": "4,2",
-        "scrollLine": "0"
+        "cursorPosition": "54,37",
+        "scrollLine": "39"
     },
     "folds": "",
-    "lastKnownWriteTime": 1600692133,
+    "lastKnownWriteTime": 1600696883,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1600692157179,
+    "last_content_update": 1600696884673,
     "read_only": false,
     "read_only_alternatives": []
 }

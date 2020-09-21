@@ -190,6 +190,7 @@ my_gtsave("tbl_summary_4")
 # Update `tbl_summary()` with `modify_*()`
 
 .pull-left[
+.tiny[
 ```{r results = FALSE}
 tbl_summary_5 <- 
   sm_trial %>% select(age, response, trt) %>% 
@@ -208,6 +209,7 @@ tbl_summary_5 <-
       "median (IQR) for continuous; n (%) for categorical"
   )
 ```
+]
 
 ```{r include = FALSE}
 my_gtsave("tbl_summary_5")

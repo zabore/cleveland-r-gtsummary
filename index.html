@@ -6,6 +6,7 @@
     <meta name="author" content="Emily C. Zabor" />
     <meta name="date" content="2020-09-30" />
     <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+    <link rel="stylesheet" href="custom.css" type="text/css" />
   </head>
   <body>
     <textarea id="source">
@@ -55,6 +56,22 @@ class: inverse, center, title-slide, middle
 &lt;p align="center"&gt;&lt;img src="Images/table1_example.png" width=70%&gt;
   
 .footnote[Minami CA, Zabor EC, Gilbert E, et al. Do Body Mass Index and Breast Density Impact Cancer Risk Among Women with Lobular Carcinoma In Situ?. *Ann Surg Oncol.* 2020;27(6):1844-1851. doi:10.1245/s10434-019-08126-9]
+
+---
+# Our solution: internal package {biostatR}
+
+## Later converted to public package {gtsummary}
+
+Authors: Daniel Sjoberg (Maintainer), Emily Zabor, Karissa Whiting, Margaret Hannum
+
+&lt;img src="Images/sjoberg.jpg" width=20%&gt;
+&lt;img src="Images/zabor3.jpg" width=20%&gt;
+&lt;img src="Images/whiting.jpg" width=20%&gt;
+&lt;img src="Images/hannum.jpg" width=20%&gt;
+
+Contributors: Michael Curry, Esther Drill, Jessica Flynn, Joseph Larmarange, Stephanie Lobaugh, Gustavo Zapata Wainberg
+
+&lt;p align="center"&gt;&lt;img src="Images/msk-black-logo.png" width=30%&gt;
 
 
 ---
@@ -346,6 +363,7 @@ tbl_summary_4 &lt;-
 # Update `tbl_summary()` with `modify_*()`
 
 .pull-left[
+.tiny[
 
 ```r
 tbl_summary_5 &lt;- 
@@ -365,6 +383,7 @@ tbl_summary_5 &lt;-
       "median (IQR) for continuous; n (%) for categorical"
   )
 ```
+]
 
 
 ]
@@ -412,6 +431,109 @@ tbl_cross_1 &lt;-
 .pull-right[
 &lt;p align="center"&gt;&lt;img src="Images/tbl_cross_1.png" width=90%&gt;&lt;/p&gt;
 ]
+
+
+
+
+
+
+
+
+
+
+
+
+
+---
+
+class: inverse, center, middle
+# tbl_regression()
+
+---
+# Traditional model `summary()`
+
+.pull-left[
+.small[
+
+```r
+m1 &lt;- glm(
+  response ~ age + stage,
+  data = trial,
+  family = binomial(link = "logit")
+  )
+
+summary(m1)
+```
+]
+]
+
+.pull-right[
+&lt;p align="center"&gt;&lt;img src="Images/messy-model-output.png" width=100%&gt;&lt;/p&gt;
+]
+
+
+---
+# Summarize models with `tbl_regression()`
+
+.pull-left[
+
+```r
+m1_tbl_1 &lt;-
+  tbl_regression(
+    m1
+  )
+```
+
+
+
+- Displays **p-values** for covariates
+
+- Shows **reference levels** for categorical variables
+]
+
+.pull-right[
+&lt;p align="center"&gt;&lt;img src="Images/m1_tbl_1.png" width=90%&gt;&lt;/p&gt;
+]
+
+
+---
+# Customize `tbl_regression()` output
+
+.pull-left[
+
+```r
+m1_tbl_2 &lt;-
+  tbl_regression(
+    m1,
+    exponentiate = TRUE
+  ) %&gt;% 
+  add_global_p()
+```
+
+
+
+- Display **odds ratio** estimates and **confidence intervals**
+
+- Add global p-values
+
+]
+
+.pull-right[
+&lt;p align="center"&gt;&lt;img src="Images/m1_tbl_2.png" width=90%&gt;&lt;/p&gt;
+]
+
+
+
+---
+# Supported models in `tbl_regression()`
+
+- From `stats`: `lm()`, `glm()`
+- From `survival`: `coxph()`, `clogit()`, `survreg()`
+- From `lme4`: `glmer()`, `lmer()`
+- From `geepack`: `geeglm()`
+
+
+**Custom tidiers** can be written and passed to `tbl_regression()` using the `tidy_fun` argument.
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
