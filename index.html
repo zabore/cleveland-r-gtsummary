@@ -5,6 +5,7 @@
     <meta charset="utf-8" />
     <meta name="author" content="Emily C. Zabor" />
     <meta name="date" content="2020-09-30" />
+    <link href="libs/font-awesome/css/fontawesome-all.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
     <link rel="stylesheet" href="custom.css" type="text/css" />
   </head>
@@ -95,29 +96,23 @@ class: inverse, center, middle
 # Need reproducible, presentation-ready tables
 
 &lt;p align="center"&gt;&lt;img src="Images/table1_example.png" width=50%&gt;
-  
-.footnote[
+
+
 .small[
 Brierley CK, Zabor EC, Komrokji RS, DeZern AE, Roboz GJ, Brunner AM, Stone RM, Sekeres MA, Steensma DP. Low participation rates and disparities in participation in interventional clinical trials for myelodysplastic syndromes. *Cancer.* 2020 Aug 7. doi: 10.1002/cncr.33105. PMID: 32767690.
 ]
-]
+
 
 
 ---
 # Our solution: internal package {biostatR}
 
-Authors: Daniel Sjoberg (Maintainer), Emily Zabor, Karissa Whiting, Margaret Hannum
+&lt;img src="Images/msk-black-logo.png" width=60%&gt;
 
-&lt;img src="Images/sjoberg.jpg" width=20%&gt;
-&lt;img src="Images/zabor.jpg" width=20%&gt;
-&lt;img src="Images/whiting.jpg" width=20%&gt;
-&lt;img src="Images/hannum.jpg" width=20%&gt;
+.xxlarge[Department of Epidemiology &amp; Biostatistics]
 
-Contributors (not pictured): Michael Curry, Esther Drill, Jessica Flynn, Joseph Larmarange, Stephanie Lobaugh, Gustavo Zapata Wainberg
+.large[We thought it was *so good* that we converted it into the public package {gtsummary}!]
 
-&lt;p align="center"&gt;&lt;img src="Images/msk-black-logo.png" width=30%&gt;
-
-We thought it was *so good* that we converted it into the public package {gtsummary}!
 
 ---
 # {gtsummary} overview
@@ -1067,6 +1062,15 @@ my_theme_tbl
 ]
 
 
+---
+# And many more options!
+
+.large[
+See the {gtsummary} + themes vignette: http://www.danieldsjoberg.com/gtsummary/articles/themes.html
+]
+
+
+
 
 
 
@@ -1079,12 +1083,122 @@ class: inverse, center, middle
 ---
 # {gtsummary} print engines
 
-&lt;p align="center"&gt;&lt;img src="Images/gtsummary_rmarkdown.png" width=85%&gt;&lt;/p&gt;
+&lt;p align="center"&gt;&lt;img src="Images/gtsummary_rmarkdown.png" width=90%&gt;&lt;/p&gt;
 
 .footnote[.small[Slide source: http://www.danieldsjoberg.com/rmedicine-gtsummary]]
 
 ---
 # Example HTML output
+
+.large[
+**Code**: https://github.com/zabore/cleveland-r-gtsummary/blob/master/gtsummary_print_engine_html.Rmd
+
+**Output**: http://www.emilyzabor.com/gtsummary_print_engine_html.html
+]
+
+
+---
+# Example PDF output
+
+.large[
+**Code**: https://github.com/zabore/cleveland-r-gtsummary/blob/master/gtsummary_print_engine_pdf.Rmd
+
+**Output**: http://www.emilyzabor.com/gtsummary_print_engine_pdf.pdf
+]
+
+
+---
+# Example RTF output
+
+.large[
+**Code**: https://github.com/zabore/cleveland-r-gtsummary/blob/master/gtsummary_print_engine_rtf.Rmd
+
+**Output**: http://www.emilyzabor.com/gtsummary_print_engine_rtf.rtf
+]
+
+
+---
+# Example Word output
+
+.large[
+**Code**: https://github.com/zabore/cleveland-r-gtsummary/blob/master/gtsummary_print_engine_word.Rmd
+
+**Output**: http://www.emilyzabor.com/gtsummary_print_engine_word.docx
+]
+
+
+---
+
+class: inverse, center, middle
+# Putting it all together
+
+---
+# A more realistic example
+
+
+---
+# {gtsummary} website
+
+.large[http://www.danieldsjoberg.com/gtsummary/]
+
+&lt;p align="center"&gt;&lt;img src="Images/gtsummary_website.png" width=80%&gt;&lt;/p&gt;
+
+
+---
+# {gtsummary} installation
+
+.pull-left[
+Install the production version of {gtsummary} from CRAN:
+
+
+```r
+install.packages("gtsummary")
+```
+
+Install the development version of {gtsummary} from GitHub:
+
+
+```r
+remotes::install_github("ddsjoberg/gtsummary")
+```
+]
+
+
+.pull-right[
+
+
+```
+## `summarise()` ungrouping output (override with `.groups` argument)
+```
+
+![](index_files/figure-html/unnamed-chunk-62-1.png)&lt;!-- --&gt;
+
+]
+
+
+---
+# Thank you
+
+{gtsummary} authors: Daniel Sjoberg (Maintainer), Margaret Hannum, Karissa Whiting, Emily Zabor
+
+&lt;img src="Images/sjoberg.jpg" width=20%&gt;
+&lt;img src="Images/hannum.jpg" width=20%&gt;
+&lt;img src="Images/whiting.jpg" width=20%&gt;
+&lt;img src="Images/zabor.jpg" width=20%&gt;
+
+{gtsummary} contributors (not pictured): Michael Curry, Esther Drill, Jessica Flynn, Joseph Larmarange, Stephanie Lobaugh, Gustavo Zapata Wainberg
+
+Special thanks to Dan Sjoberg and Margie Hannum for sharing materials from previous {gtsummary} talks!
+
+R/Medicine, August 28, 2020: http://www.danieldsjoberg.com/rmedicine-gtsummary
+
+RLadies NYC, February 26, 2020: https://margarethannum.com/gtsummary-presentation-rladies
+
+&lt;br&gt;
+
+.medium[
+<i class="fab  fa-twitter "></i>: @zabormetrics,    <i class="fab  fa-github "></i>: @zabore
+]
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

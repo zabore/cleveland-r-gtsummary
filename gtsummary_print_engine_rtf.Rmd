@@ -1,0 +1,52 @@
+---
+title: "Example {gtsummary} RTF output"
+output: rtf_document
+---
+  
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, message = FALSE}
+library(gtsummary)
+library(dplyr)
+library(survival)
+
+ex_tbl <-
+  coxph(Surv(ttdeath, death) ~ age + grade, data = trial) %>% 
+  tbl_regression(
+    exponentiate = TRUE
+  ) %>% 
+  add_global_p() %>% 
+  bold_labels() %>% 
+  italicize_levels()
+```
+
+```{r}
+ex_tbl %>% as_gt()
+```
+
+  
+```{r}
+ex_tbl %>% as_kable()
+```
+
+```{r eval = FALSE}
+ex_tbl %>% as_flex_table()
+```
+
+Output not supported!
+
+```{r eval = FALSE}
+ex_tbl %>% as_kable_extra()
+```
+
+Output not supported!
+  
+```{r}
+ex_tbl %>% as_hux_table()
+```
+
+```{r}
+ex_tbl %>% as_tibble()
+```
