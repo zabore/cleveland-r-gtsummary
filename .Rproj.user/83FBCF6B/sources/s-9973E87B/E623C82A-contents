@@ -1,0 +1,171 @@
+class: inverse, center, middle
+# tbl_merge()/tbl_stack()
+
+---
+# tbl_merge() for side-by-side tables
+
+.pull-left[
+
+A **univariable** table:
+
+```{r results = FALSE, message = FALSE}
+library(survival)
+
+tbl_uvsurv <- 
+  trial %>% 
+  select(age, grade, death, ttdeath) %>% 
+  tbl_uvregression(
+    method = coxph,
+    y = Surv(ttdeath, death),
+    exponentiate = TRUE
+  ) %>% 
+  add_global_p()
+```
+
+```{r include=FALSE}
+my_gtsave("tbl_uvsurv")
+```
+
+]
+
+
+.pull-right[
+
+A **multivariable** table:
+
+```{r results = FALSE, message = FALSE}
+library(survival)
+
+tbl_mvsurv <- coxph(
+  Surv(ttdeath, death) ~ 
+    age + grade, 
+  data = trial
+  ) %>% 
+  tbl_regression(
+    exponentiate = TRUE
+  ) %>% 
+  add_global_p() 
+```
+
+```{r include=FALSE}
+my_gtsave("tbl_mvsurv")
+```
+
+]
+
+---
+# tbl_merge() for side-by-side tables
+
+.pull-left[
+
+A **univariable** table:
+
+<p align="center"><img src="Images/tbl_uvsurv.png" width=90%></p>
+]
+
+.pull-right[
+
+A **multivariable** table:
+
+<p align="center"><img src="Images/tbl_mvsurv.png" width=85%></p>
+]
+
+---
+# tbl_merge() for side-by-side tables
+
+```{r results = FALSE}
+tbl_surv_merge <- tbl_merge(
+  list(tbl_uvsurv, tbl_mvsurv),
+  tab_spanner = c("**Univariable**", "**Multivariable**")
+  )
+```
+
+```{r include=FALSE}
+my_gtsave("tbl_surv_merge")
+```
+
+<p align="center"><img src="Images/tbl_surv_merge.png" width=50%></p>
+
+---
+# tbl_stack() to combine vertically
+
+.pull-left[
+
+An **unadjusted** model:
+
+```{r results = FALSE}
+t3 <-
+  coxph(Surv(ttdeath, death) ~ 
+          trt, 
+        data = trial) %>%
+  tbl_regression(
+    show_single_row = trt,
+    label = trt ~ "Drug B vs A",
+    exponentiate = TRUE
+    )
+```
+
+```{r include=FALSE}
+my_gtsave("t3")
+```
+
+]
+
+.pull-right[
+
+An **adjusted** model:
+
+```{r results = FALSE}
+t4 <-
+  coxph(Surv(ttdeath, death) ~ 
+          trt + grade + stage + marker, 
+        data = trial) %>%
+  tbl_regression(
+    show_single_row = trt,
+    label = trt ~ "Drug B vs A",
+    exponentiate = TRUE, 
+    include = "trt"
+    )
+```
+
+```{r include=FALSE}
+my_gtsave("t4")
+```
+]
+
+
+---
+# tbl_stack() to combine vertically
+
+.pull-left[
+
+An **unadjusted** model:
+
+<p align="center"><img src="Images/t3.png" width=90%></p>
+]
+
+.pull-right[
+
+An **adjusted** model:
+
+<p align="center"><img src="Images/t4.png" width=90%></p>
+]
+
+
+---
+# tbl_stack() to combine vertically
+
+```{r results = FALSE}
+tbl_surv_stack <- tbl_stack(
+  list(t3, t4),
+  group_header = c("Unadjusted", "Adjusted")
+  )
+```
+
+```{r include=FALSE}
+my_gtsave("tbl_surv_stack")
+```
+
+<p align="center"><img src="Images/tbl_surv_stack.png" width=40%></p>
+
+

@@ -1,0 +1,14 @@
+class: inverse, center, middle
+# {gtsummary} print engines
+
+
+---
+# {gtsummary} print engines
+
+<p align="center"><img src="Images/gtsummary_rmarkdown.png" width=90%></p>
+
+.footnote[.small[Slide source: http://www.danieldsjoberg.com/rmedicine-gtsummary]]
+
+---
+# Example HTML output
+

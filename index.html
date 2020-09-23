@@ -30,10 +30,50 @@ class: inverse, center, title-slide, middle
 
 
 ---
+# About me
 
-# Motivation: the reproducibility crisis
+.left-column[
+&lt;img src="Images/UMN.jpg" width=50%&gt;
 
-.pull-left[.large[
+&lt;img src="Images/msk-black-logo.png" width=95%&gt;
+
+&lt;img src="Images/CU.jpg" width=50%&gt;
+
+&lt;img src="Images/Taussig.jpg" width=75%&gt;
+]
+
+.right-column[
+.medium[
+
+* MS in Biostatistics from the **University of Minnesota** in 2010
+
+&lt;br&gt;
+&lt;br&gt;
+
+* 9 years as a Research Biostatistician at **Memorial Sloan Kettering Cancer Center**
+
+&lt;br&gt;
+
+* DrPH in Biostatistics from **Columbia University** in 2019
+
+&lt;br&gt;
+
+* Faculty Biostatistician at **Cleveland Clinic** starting in 2019
+]
+
+]
+
+
+---
+
+class: inverse, center, middle
+# Motivation
+
+---
+# The reproducibility crisis
+
+.pull-left[
+.large[
 - Quality of medical research is often low
 
 - **Low quality code** in medical research part of the problem
@@ -41,7 +81,8 @@ class: inverse, center, title-slide, middle
 - Low quality code is more likely to **contain errors**
 
 - Reproducibility is often **cumbersome** and **time-consuming**
-]]
+]
+]
 
 .pull-right[
 &lt;p align="center"&gt;&lt;img src="Images/reproducibility-graphic-online1.jpeg" width=90%&gt;&lt;/p&gt;
@@ -51,48 +92,50 @@ class: inverse, center, title-slide, middle
 
 
 ---
-# Motivation: reproducible, presentation-ready tables
+# Need reproducible, presentation-ready tables
 
-&lt;p align="center"&gt;&lt;img src="Images/table1_example.png" width=70%&gt;
+&lt;p align="center"&gt;&lt;img src="Images/table1_example.png" width=50%&gt;
   
-.footnote[Minami CA, Zabor EC, Gilbert E, et al. Do Body Mass Index and Breast Density Impact Cancer Risk Among Women with Lobular Carcinoma In Situ?. *Ann Surg Oncol.* 2020;27(6):1844-1851. doi:10.1245/s10434-019-08126-9]
+.footnote[
+.small[
+Brierley CK, Zabor EC, Komrokji RS, DeZern AE, Roboz GJ, Brunner AM, Stone RM, Sekeres MA, Steensma DP. Low participation rates and disparities in participation in interventional clinical trials for myelodysplastic syndromes. *Cancer.* 2020 Aug 7. doi: 10.1002/cncr.33105. PMID: 32767690.
+]
+]
+
 
 ---
 # Our solution: internal package {biostatR}
 
-## Later converted to public package {gtsummary}
-
 Authors: Daniel Sjoberg (Maintainer), Emily Zabor, Karissa Whiting, Margaret Hannum
 
 &lt;img src="Images/sjoberg.jpg" width=20%&gt;
-&lt;img src="Images/zabor3.jpg" width=20%&gt;
+&lt;img src="Images/zabor.jpg" width=20%&gt;
 &lt;img src="Images/whiting.jpg" width=20%&gt;
 &lt;img src="Images/hannum.jpg" width=20%&gt;
 
-Contributors: Michael Curry, Esther Drill, Jessica Flynn, Joseph Larmarange, Stephanie Lobaugh, Gustavo Zapata Wainberg
+Contributors (not pictured): Michael Curry, Esther Drill, Jessica Flynn, Joseph Larmarange, Stephanie Lobaugh, Gustavo Zapata Wainberg
 
 &lt;p align="center"&gt;&lt;img src="Images/msk-black-logo.png" width=30%&gt;
 
+We thought it was *so good* that we converted it into the public package {gtsummary}!
 
 ---
 # {gtsummary} overview
 
 .pull-left[
-* Create tabular summaries with sensible defaults but highly customizable
+* Create **tabular summaries** with sensible defaults but highly customizable
 * Types of summaries:
   - "Table 1"-types
   - Cross-tabulation
   - Regression models
   - Survival data
+  - Survey data
   - Custom tables
 
-* Report statistics from {gtsummary} tables inline in R Markdown
-
+* Report statistics from {gtsummary} tables **inline** in R Markdown
 * Stack and/or merge any table type
-
-* Use themes to standardize across tables
-
-* Choose from different print engines
+* Use **themes** to standardize across tables
+* Choose from different **print engines**
 
 ]
 
@@ -149,7 +192,7 @@ head(trial)
 
 .pull-left[
 
-This presentation will use a subset of the variables
+This presentation will use a subset of the variables.
 
 
 ```r
@@ -182,7 +225,7 @@ class: inverse, center, middle
 ```r
 tbl_summary_1 &lt;- 
   sm_trial %&gt;%
-  select(age, grade, response) %&gt;% 
+  select(-trt) %&gt;% 
   tbl_summary()
 ```
 
@@ -203,7 +246,7 @@ tbl_summary_1 &lt;-
 ]
 
 .pull-right[
-&lt;p align="center"&gt;&lt;img src="Images/tbl_summary_1.png" width=85%&gt;&lt;/p&gt;
+&lt;p align="center"&gt;&lt;img src="Images/tbl_summary_1.png" width=65%&gt;&lt;/p&gt;
 ]
 
 
@@ -228,8 +271,11 @@ tbl_summary_2 &lt;-
 
 .medium[
 - `by`: specifies a column variable for cross-tabulation
+
 - `statistic`: customize the reported statistics
+
 - `label`: change or customize variable labels
+
 - `digits`: specify the number of decimal places for rounding
 
 ]
@@ -243,7 +289,7 @@ tbl_summary_2 &lt;-
 ---
 # Customize tbl_summary() output
 
-**provide argument**       =    **select variables**      ~   **give instructions**
+.large[**provide argument**       =    **select variables**      ~   **give instructions**]
 
 
 ```r
@@ -257,7 +303,7 @@ sm_trial %&gt;%
 
 &lt;br&gt;
 
-Use **lists** to specify more than two choices:
+.large[Use **lists** to specify more than two choices:]
 
 
 ```r
@@ -268,7 +314,7 @@ label = list(age ~ "Patient age (years)", grade = "Pathologic tumor grade")
 ---
 # Add-on functions in {gtsummary}
 
-.xxlarge[
+.xlarge[
 `tbl_summary()` objects can also be updated using related functions.
 
 - `add_*()` add additional column of statistics or information, e.g. p-values, q-values, overall statistics, N obs., and more
@@ -281,7 +327,7 @@ label = list(age ~ "Patient age (years)", grade = "Pathologic tumor grade")
 
 
 ---
-# Update `tbl_summary()` with `add_*()`
+# Update tbl\_summary() with add\_\*()
 
 .pull-left[
 
@@ -292,15 +338,18 @@ tbl_summary_3a &lt;-
     by = trt
     ) %&gt;% 
   add_p() %&gt;% 
-  add_q()  
-```
-
-```
-## Adjusting p-values with
-## `stats::p.adjust(x$table_body$p.value, method = "fdr")`
+  add_q(
+    method = "bonferroni"
+  )  
 ```
 
 
+
+.medium[
+* `add_p()`: adds a column of p-values
+
+* `add_q()`: adds a column of p-values adjusted for multiple comparisons through a call to `p.adjust()`
+]
 ]
 
 .pull-right[
@@ -309,7 +358,7 @@ tbl_summary_3a &lt;-
 
 
 ---
-# Update `tbl_summary()` with `add_*()`
+# Update tbl\_summary() with add\_\*()
 
 .pull-left[
 
@@ -317,7 +366,8 @@ tbl_summary_3a &lt;-
 tbl_summary_3b &lt;- 
   sm_trial %&gt;%
   tbl_summary(
-    by = trt
+    by = trt,
+    missing = "no"
     ) %&gt;% 
   add_overall() %&gt;% 
   add_n() %&gt;% 
@@ -327,6 +377,12 @@ tbl_summary_3b &lt;-
 ```
 
 
+
+.medium[
+* `add_overall()`: adds a column of overall statistics
+* `add_n()`: adds a column with the sample size 
+* `add_stat_label()`: adds a description of the reported statistic
+]
 ]
 
 .pull-right[
@@ -335,7 +391,7 @@ tbl_summary_3b &lt;-
 
 
 ---
-# Update `tbl_summary()` with `bold_*()/italicize_*()`
+# Update tbl\_summary() with bold\_\*()/italicize\_\*()
 
 .pull-left[
 
@@ -348,10 +404,16 @@ tbl_summary_4 &lt;-
   add_p() %&gt;% 
   bold_labels() %&gt;% 
   italicize_levels() %&gt;% 
-  bold_p()
+  bold_p(t = 0.8)
 ```
 
 
+
+.medium[
+* `bold_labels()`: bold the variable labels
+* `italicize_levels()`: italicize the variable levels
+* `bold_p()`: bold p-values according a specified threshold
+]
 ]
 
 .pull-right[
@@ -360,7 +422,7 @@ tbl_summary_4 &lt;-
 
 
 ---
-# Update `tbl_summary()` with `modify_*()`
+# Update tbl\_summary() with modify\_\*()
 
 .pull-left[
 .tiny[
@@ -398,17 +460,20 @@ tbl_summary_5 &lt;-
 ---
 # Add-on functions in {gtsummary}
 
+.xlarge[
 And many more! 
 
 See the documentation at http://www.danieldsjoberg.com/gtsummary/reference/index.html
 
 And a detailed `tbl_summary()` vignette at http://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html
+]
+
 
 
 ---
-# Cross-tabulation with `tbl_cross()`
+# Cross-tabulation with tbl_cross()
 
-`tbl_cross()` is a wrapper for `tbl_summary()` for **n x m** tables
+.large[`tbl_cross()` is a wrapper for `tbl_summary()` for **n x m** tables]
 
 .pull-left[
 &lt;br&gt;
@@ -450,10 +515,9 @@ class: inverse, center, middle
 # tbl_regression()
 
 ---
-# Traditional model `summary()`
+# Traditional model summary()
 
 .pull-left[
-.small[
 
 ```r
 m1 &lt;- glm(
@@ -464,6 +528,9 @@ m1 &lt;- glm(
 
 summary(m1)
 ```
+
+.medium[
+Looks **messy** and it's not easy for others to understand.
 ]
 ]
 
@@ -473,7 +540,7 @@ summary(m1)
 
 
 ---
-# Summarize models with `tbl_regression()`
+# Basic tbl_regression()
 
 .pull-left[
 
@@ -486,9 +553,12 @@ m1_tbl_1 &lt;-
 
 
 
+.medium[
 - Displays **p-values** for covariates
 
 - Shows **reference levels** for categorical variables
+]
+
 ]
 
 .pull-right[
@@ -497,7 +567,7 @@ m1_tbl_1 &lt;-
 
 
 ---
-# Customize `tbl_regression()` output
+# Customize tbl_regression() output
 
 .pull-left[
 
@@ -512,10 +582,11 @@ m1_tbl_2 &lt;-
 
 
 
+.medium[
 - Display **odds ratio** estimates and **confidence intervals**
 
 - Add global p-values
-
+]
 ]
 
 .pull-right[
@@ -523,17 +594,497 @@ m1_tbl_2 &lt;-
 ]
 
 
-
 ---
-# Supported models in `tbl_regression()`
+# Supported models in tbl_regression()
 
+.xlarge[
 - From `stats`: `lm()`, `glm()`
 - From `survival`: `coxph()`, `clogit()`, `survreg()`
 - From `lme4`: `glmer()`, `lmer()`
 - From `geepack`: `geeglm()`
+]
 
 
-**Custom tidiers** can be written and passed to `tbl_regression()` using the `tidy_fun` argument.
+.large[**Custom tidiers** can be written and passed to `tbl_regression()` using the `tidy_fun` argument.]
+
+
+---
+# Univariate models with tbl_uvregression()
+
+.pull-left[
+
+
+```r
+tbl_uvreg &lt;- 
+  sm_trial %&gt;% 
+  tbl_uvregression(
+    method = glm,
+    y = response,
+    method.args = list(family = binomial),
+    exponentiate = TRUE
+    )
+```
+
+
+
+.medium[
+- Specify  model `method`, `method.args`, and the `response` variable
+
+- Arguments and helper functions like `exponentiate`, `bold_*()`, `add_global_p()` can also be used with `tbl_uvregression()`
+]
+]
+
+.pull-right[
+&lt;p align="center"&gt;&lt;img src="Images/tbl_uvreg.png" width=90%&gt;&lt;/p&gt;
+]
+
+
+
+---
+
+class: inverse, center, middle
+# inline_text()
+
+---
+# {gtsummary} reporting with inline_text()
+.large[
+- Tables are important, but we often need to report results in-line in a report.
+
+- Any statistic reported in a {gtsummary} table can be extracted and reported in-line in an R Markdown document with the `inline_text()` function.
+
+- The pattern of what is reported can be modified with the `pattern = ` argument.  
+
+- Default is `pattern = "{estimate} ({conf.level*100}% CI {conf.low}, {conf.high}; {p.value})"`.
+]
+
+
+---
+# {gtsummary} reporting with inline_text()
+
+&lt;p align="center"&gt;&lt;img src="Images/m1_tbl_2.png" width=30%&gt;&lt;/p&gt;
+
+**In Code:** 
+The odds ratio for age is '` r inline_text(m1_tbl_2, variable = age)`'
+
+**In Report:** 
+The odds ratio for age is 1.02 (95% CI 1.00, 1.04; p=0.091)
+
+
+---
+
+class: inverse, center, middle
+# tbl_merge()/tbl_stack()
+
+---
+# tbl_merge() for side-by-side tables
+
+.pull-left[
+
+A **univariable** table:
+
+
+```r
+library(survival)
+
+tbl_uvsurv &lt;- 
+  trial %&gt;% 
+  select(age, grade, death, ttdeath) %&gt;% 
+  tbl_uvregression(
+    method = coxph,
+    y = Surv(ttdeath, death),
+    exponentiate = TRUE
+  ) %&gt;% 
+  add_global_p()
+```
+
+
+
+]
+
+
+.pull-right[
+
+A **multivariable** table:
+
+
+```r
+library(survival)
+
+tbl_mvsurv &lt;- coxph(
+  Surv(ttdeath, death) ~ 
+    age + grade, 
+  data = trial
+  ) %&gt;% 
+  tbl_regression(
+    exponentiate = TRUE
+  ) %&gt;% 
+  add_global_p() 
+```
+
+
+
+]
+
+---
+# tbl_merge() for side-by-side tables
+
+.pull-left[
+
+A **univariable** table:
+
+&lt;p align="center"&gt;&lt;img src="Images/tbl_uvsurv.png" width=90%&gt;&lt;/p&gt;
+]
+
+.pull-right[
+
+A **multivariable** table:
+
+&lt;p align="center"&gt;&lt;img src="Images/tbl_mvsurv.png" width=85%&gt;&lt;/p&gt;
+]
+
+---
+# tbl_merge() for side-by-side tables
+
+
+```r
+tbl_surv_merge &lt;- tbl_merge(
+  list(tbl_uvsurv, tbl_mvsurv),
+  tab_spanner = c("**Univariable**", "**Multivariable**")
+  )
+```
+
+
+
+&lt;p align="center"&gt;&lt;img src="Images/tbl_surv_merge.png" width=50%&gt;&lt;/p&gt;
+
+---
+# tbl_stack() to combine vertically
+
+.pull-left[
+
+An **unadjusted** model:
+
+
+```r
+t3 &lt;-
+  coxph(Surv(ttdeath, death) ~ 
+          trt, 
+        data = trial) %&gt;%
+  tbl_regression(
+    show_single_row = trt,
+    label = trt ~ "Drug B vs A",
+    exponentiate = TRUE
+    )
+```
+
+
+
+]
+
+.pull-right[
+
+An **adjusted** model:
+
+
+```r
+t4 &lt;-
+  coxph(Surv(ttdeath, death) ~ 
+          trt + grade + stage + marker, 
+        data = trial) %&gt;%
+  tbl_regression(
+    show_single_row = trt,
+    label = trt ~ "Drug B vs A",
+    exponentiate = TRUE, 
+    include = "trt"
+    )
+```
+
+
+]
+
+
+---
+# tbl_stack() to combine vertically
+
+.pull-left[
+
+An **unadjusted** model:
+
+&lt;p align="center"&gt;&lt;img src="Images/t3.png" width=90%&gt;&lt;/p&gt;
+]
+
+.pull-right[
+
+An **adjusted** model:
+
+&lt;p align="center"&gt;&lt;img src="Images/t4.png" width=90%&gt;&lt;/p&gt;
+]
+
+
+---
+# tbl_stack() to combine vertically
+
+
+```r
+tbl_surv_stack &lt;- tbl_stack(
+  list(t3, t4),
+  group_header = c("Unadjusted", "Adjusted")
+  )
+```
+
+
+
+&lt;p align="center"&gt;&lt;img src="Images/tbl_surv_stack.png" width=40%&gt;&lt;/p&gt;
+
+
+
+
+---
+
+class: inverse, center, middle
+# {gtsummary} themes
+
+---
+# {gtsummary} theme basics
+
+.large[
+- A **theme** is a set of customization preferences that can be easily set and reused. 
+
+- Themes control **default settings for existing functions**
+
+- Themes control more **fine-grained customization** not available via arguments or helper functions
+
+- Easily use one of the **available themes**, or **create your own**
+]
+
+
+---
+# {gtsummary} default theme
+
+.pull-left[
+
+
+```r
+reset_gtsummary_theme()
+
+no_theme &lt;- 
+  trial %&gt;%
+  select(age, grade, trt) %&gt;%
+  tbl_summary(by = trt) %&gt;%
+  add_stat_label() %&gt;%
+  add_p() %&gt;%
+  as_gt() %&gt;%
+  gt::tab_header("Default Theme")
+```
+
+
+]
+
+.pull-right[
+&lt;p align="center"&gt;&lt;img src="Images/no_theme.png" width=90%&gt;&lt;/p&gt;
+]
+
+
+
+
+---
+# {gtsummary} theme_gtsummary_journal()
+
+.pull-left[
+
+
+```r
+reset_gtsummary_theme()
+
+theme_gtsummary_journal(journal = "jama")
+
+jama_theme &lt;- 
+  trial %&gt;%
+  select(age, grade, trt) %&gt;%
+  tbl_summary(by = trt) %&gt;%
+  add_stat_label() %&gt;%
+  add_p() %&gt;%
+  as_gt() %&gt;%
+  gt::tab_header("Journal Theme (JAMA)")
+```
+
+
+
+]
+
+.pull-right[
+&lt;p align="center"&gt;&lt;img src="Images/jama_theme.png" width=90%&gt;&lt;/p&gt;
+]
+
+.medium[
+Journal options include `jama` and `lancet`
+]
+
+
+---
+# {gtsummary} theme_gtsummary_language()
+
+.pull-left[
+
+```r
+reset_gtsummary_theme()
+
+theme_gtsummary_language(language = "hi")
+
+lang_theme &lt;- 
+  trial %&gt;%
+  select(age, grade, trt) %&gt;%
+  tbl_summary(by = trt) %&gt;%
+  add_stat_label() %&gt;%
+  add_p() %&gt;%
+  as_gt() %&gt;%
+  gt::tab_header("Language Theme (Hindi)")
+```
+
+
+
+]
+
+
+.pull-right[
+&lt;p align="center"&gt;&lt;img src="Images/lang_theme.png" width=90%&gt;&lt;/p&gt;
+]
+
+.medium[
+Language options: "de" (German), "en" (English), "es" (Spanish), "fr" (French), "gu" (Gujarati), "hi" (Hindi), "ja" (Japanese), "mr" (Marathi), "pt" (Portuguese), "se" (Swedish), "zh-cn" (Chinese - Simplified), "zh-tw" (Chinese - Traditional)
+]
+
+
+
+---
+# {gtsummary} theme_gtsummary_compact()
+
+.pull-left[
+
+```r
+reset_gtsummary_theme()
+
+theme_gtsummary_compact()
+
+compact_theme &lt;- 
+  trial %&gt;%
+  select(age, grade, trt) %&gt;%
+  tbl_summary(by = trt) %&gt;%
+  add_stat_label() %&gt;%
+  add_p() %&gt;%
+  as_gt() %&gt;%
+  gt::tab_header("Compact Theme")
+```
+
+
+]
+
+.pull-right[
+&lt;p align="center"&gt;&lt;img src="Images/compact_theme.png" width=90%&gt;&lt;/p&gt;
+]
+
+.medium[
+Reduces padding and font size
+]
+
+
+---
+# {gtsummary} set_gtsummary_theme()
+
+
+```r
+my_theme &lt;-
+  list(
+    # Some gt customization
+    "as_gt-lst:addl_cmds" = list(
+      # make the font size small
+      tab_spanner = rlang::expr(gt::tab_options(table.font.size = 'small')),
+      # add a custom title and subtitle to every table
+      user_added1 = rlang::expr(gt::tab_header(
+        title = "Emily Zabor's Table", subtitle = "For Internal Use Only")),
+      # add a custom data source note
+      user_added2 = rlang::expr(gt::tab_source_note(
+        source_note = "Source: very private internal data!")),
+      # stripe the table rows
+      user_added3 = rlang::expr(gt::opt_row_striping()),
+      user_added4 = rlang::expr(gt::opt_table_lines("none"))
+      )
+    )
+```
+
+
+---
+# {gtsummary} set_gtsummary_theme()
+
+
+```r
+returns &lt;- 
+  trial %&gt;%
+  select(age, grade, trt) %&gt;%
+  tbl_summary(by = trt) %&gt;%
+  add_stat_label() %&gt;%
+  add_p() %&gt;%
+  as_gt(return_calls = TRUE) 
+
+returns
+```
+
+&lt;img src="Images/return_calls.png" width=80%&gt;
+
+
+
+---
+# {gtsummary} set_gtsummary_theme()
+
+.pull-left[
+
+```r
+reset_gtsummary_theme()
+
+set_gtsummary_theme(my_theme)
+
+my_theme_tbl &lt;- 
+  trial %&gt;%
+  select(age, grade, trt) %&gt;%
+  tbl_summary(by = trt) %&gt;%
+  add_stat_label() %&gt;%
+  add_p() %&gt;%
+  as_gt() 
+
+my_theme_tbl
+```
+
+
+
+* Made the font size small
+* Added custom title, subtitle, source note
+* Striped the rows
+* Removed all row lines
+]
+
+.pull-right[
+&lt;p align="center"&gt;&lt;img src="Images/my_theme_tbl.png" width=90%&gt;&lt;/p&gt;
+]
+
+
+
+
+
+---
+
+class: inverse, center, middle
+# {gtsummary} print engines
+
+
+---
+# {gtsummary} print engines
+
+&lt;p align="center"&gt;&lt;img src="Images/gtsummary_rmarkdown.png" width=85%&gt;&lt;/p&gt;
+
+.footnote[.small[Slide source: http://www.danieldsjoberg.com/rmedicine-gtsummary]]
+
+---
+# Example HTML output
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
