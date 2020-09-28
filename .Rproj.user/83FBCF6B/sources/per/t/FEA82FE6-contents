@@ -1,0 +1,43 @@
+# {gtsummary} example dataset
+
+* The `trial` dataset is included with {gtsummary}
+
+* Simulated dataset of baseline characteristics for 200 patients who receive Drug A or Drug B
+
+* Variables were assigned labels using the `labelled` package
+
+```{r message = FALSE}
+library(gtsummary)
+library(tidyverse)
+
+head(trial)
+```
+
+
+---
+# {gtsummary} example dataset
+
+.pull-left[
+
+This presentation will use a subset of the variables.
+
+```{r}
+sm_trial <-
+  trial %>% 
+  select(trt, age, grade, response)
+```
+
+```{r echo = FALSE}
+sm_trial_info <-
+  tibble(
+    Variable = names(sm_trial),
+    Label = map_chr(Variable, ~attr(trial[[.x]], "label"))
+  ) %>% gt::gt()
+my_gtsave("sm_trial_info")
+```
+
+]
+
+.pull-right[
+<p align="center"><img src="Images/sm_trial_info.png" width=90%></p>
+]
