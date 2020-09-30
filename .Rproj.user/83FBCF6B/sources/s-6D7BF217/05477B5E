@@ -3,7 +3,7 @@
     "path": "H:/cleveland-r-gtsummary/index.Rmd",
     "project_path": "index.Rmd",
     "type": "r_markdown",
-    "hash": "780422869",
+    "hash": "2395878051",
     "contents": "",
     "dirty": false,
     "created": 1600176297109.0,
@@ -11,15 +11,15 @@
     "relative_order": 1,
     "properties": {
         "tempName": "Untitled1",
-        "cursorPosition": "28,12",
-        "scrollLine": "0"
+        "cursorPosition": "208,12",
+        "scrollLine": "161"
     },
     "folds": "",
-    "lastKnownWriteTime": 1600891544,
+    "lastKnownWriteTime": 1601496767,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1600891546011,
+    "last_content_update": 1601496769445,
     "read_only": false,
     "read_only_alternatives": []
 }

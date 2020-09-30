@@ -131,6 +131,82 @@ class: inverse, center, title-slide, middle
 ```{r child='09-summary.Rmd'}
 ```
 
+---
+class: inverse, center, middle
+# New in v1.3.5 (Released 2020-09-29)!
+
+
+---
+# New summary type continuous2
+.pull-left[
+
+```{r results = FALSE}
+tbl_summary_n1 <- 
+  sm_trial %>%
+  select(-trt) %>% 
+  tbl_summary(
+    type = age ~ "continuous2",
+    statistic = all_continuous2() ~ "{mean} ({sd})"
+  )
+```
+
+```{r include=FALSE}
+my_gtsave("tbl_summary_n1")
+```
+
+.medium[
+- Prints the continuous summary on the line below the variable label
+
+- Function `all_continuous2()` for selecting all `continuous2` type variables
+
+- `theme_gtsummary_continuous2()` makes `continuous2` the default summary type for all continuous variables
+]
+
+]
+
+.pull-right[
+<p align="center"><img src="Images/tbl_summary_n1.png" width=45%></p>
+]
+
+
+---
+# New function add_glance_source_note()
+
+```{r}
+m1 <- 
+  glm(
+  response ~ age + stage,
+  data = trial,
+  family = binomial(link = "logit")
+  ) 
+
+broom::glance(m1)
+```
+
+
+---
+# New function add_glance_source_note()
+
+```{r}
+m1_tbl_n1 <-
+  tbl_regression(
+    m1,
+    exponentiate = TRUE
+  ) %>% 
+  add_glance_source_note()
+```
+
+```{r include=FALSE}
+my_gtsave("m1_tbl_n1")
+```
+
+<p align="center"><img src="Images/m1_tbl_n1.png" width=70%></p>
+
+
+---
+# And more...
+
+See package News for full details: http://www.danieldsjoberg.com/gtsummary/news/index.html
 
 
 
